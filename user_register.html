@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .register-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-container h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 92.5%;
+            height: 30px;
+            margin-bottom: 20px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        #register-status {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="register-form" method="post">
+            <label>Name :</label>
+            <input type="text" id="name" name="name" required><br>
+            <label>Email :</label>
+            <input type="email" id="email" name="email" required><br>
+            <label>Mobile :</label>
+            <input type="tel" id="mobile" name="mobile" required><br>
+            <label>Password :</label>
+            <input type="password" id="password" name="password" required><br>
+            <label>Confirm Password :</label>
+            <input type="password" id="confirm_password" name="confirm_password" required><br>
+            <input type="submit" value="Register">
+        </form>
+        <div id="register-status"></div>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'register.php', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    if (response === 'Registration successful!') {
+                        alert('Registration Successful!');
+                        window.location.href = 'user_login.html';
+                    } else {
+                        document.getElementById('register-status').innerHTML = "<div style='color: red;'>" + response + "</div>";
+                    }
+                } else {
+                    document.getElementById('register-status').innerHTML = "<div style='color: red;'>Error: Unable to submit form.</div>";
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
+

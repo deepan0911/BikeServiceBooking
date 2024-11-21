@@ -1,0 +1,57 @@
+CREATE DATABASE bike_service;
+
+USE bike_service;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  mobile VARCHAR(20) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  last_login datetime,
+  last_logged_out datetime,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE admins (
+  id INT AUTO_INCREMENT,
+  username VARCHAR(255),
+  password VARCHAR(255),
+  email VARCHAR(255),
+  created_at timestamp,
+  mobile_no VARCHAR(10),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE bookings (
+  id INT AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  vehicle_number VARCHAR(20) NOT NULL,
+  complaint TEXT NOT NULL,
+  service_date DATETIME NOT NULL,
+  status TINYINT(1),
+  completed_at timestamp,
+  invoice_sent enum ('sent', 'pending'),
+  payment_status enum('paid','pending','overdue'),
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE invoices (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  booking_id INT,
+  invoice_date DATE,
+  total DECIMAL(10, 2),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (booking_id) REFERENCES bookings(id)
+);
+
+CREATE TABLE invoice_items (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  invoice_id INT,
+  description VARCHAR(255),
+  quantity INT,
+  price DECIMAL(10, 2),
+  total DECIMAL(10, 2),
+  FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+);

@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Lato',sans-serif;
+        }
+        .login-container {
+            font-family: 'Lato',sans-serif;
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"], input[type="password"] {
+            
+            width: 92.5%;
+            height: 30px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        #login-status {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        a:hover {
+            color: #3e8e41;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form" method="post">
+            <label>Email :</label>
+            <input type="email" id="email" name="email" required>
+            <label>Password :</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="Login">
+            <div id="login-status"></div>
+        </form>
+        <p>Don't have an account? <a href="user_register.html">Register</a></p>
+    </div>
+
+    <script>
+       document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'login.php', true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = xhr.responseText.trim();
+            if (response === 'Login successful!') {
+                alert('Login Successful!');
+                window.location.href = 'index.php'; // Redirect to index.php
+            } else {
+                document.getElementById('login-status').innerHTML = "<div>" + response + "</div>";
+            }
+        } else {
+            document.getElementById('login-status').innerHTML = "<div>Error: Unable to submit form.</div>";
+        }
+    };
+    xhr.send(formData);
+});
+
+    </script>
+    
+    
+</body>
+</html>
+

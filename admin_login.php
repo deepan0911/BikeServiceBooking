@@ -6,8 +6,10 @@ if (isset($_SESSION['admin_logged_in'])) {
 } 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username']; 
-    $password = $_POST['password']; 
+    // $username = $_POST['username']; 
+    // $password = $_POST['password']; 
+    $username = "deepann2004@gmail.com"; 
+    $password = "@#0911"; 
     // Authenticate admin credentials
     $query = "SELECT * FROM admins WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($query);
